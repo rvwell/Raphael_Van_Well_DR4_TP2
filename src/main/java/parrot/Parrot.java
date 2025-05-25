@@ -7,6 +7,10 @@ public class Parrot {
     private final double voltage;
     private final boolean isNailed;
 
+    private static final double BASE_SPEED = 12.0;
+    private static final double AFRICAN_PARROT_LOAD_FACTOR = 9.0;
+    private static final double NORWEGIAN_BLUE_MAX_SPEED_CAP = 24.0;
+
     public Parrot(ParrotTypeEnum type, int numberOfCoconuts, double voltage, boolean isNailed) {
         this.type = type;
         this.numberOfCoconuts = numberOfCoconuts;
@@ -23,30 +27,19 @@ public class Parrot {
     }
 
     private double getEuropeanParrotSpeed() {
-        return getBaseSpeed();
+        return BASE_SPEED;
     }
 
     private double getAfricanParrotSpeed() {
-        return Math.max(0, getBaseSpeed() - getLoadFactor() * numberOfCoconuts);
+        double speedReductionDueToCoconuts = AFRICAN_PARROT_LOAD_FACTOR * numberOfCoconuts;
+        return Math.max(0, BASE_SPEED - speedReductionDueToCoconuts);
     }
 
     private double getNorwegianBlueParrotSpeed() {
         if (isNailed) {
             return 0;
         }
-        return getBaseSpeed(voltage);
-    }
-
-    private double getBaseSpeed(double voltage) {
-        return Math.min(24.0, voltage * getBaseSpeed());
-    }
-
-    private double getLoadFactor() {
-        return 9.0;
-    }
-
-    private double getBaseSpeed() {
-        return 12.0;
+        return Math.min(NORWEGIAN_BLUE_MAX_SPEED_CAP, voltage * BASE_SPEED);
     }
 
     public String getCry() {
