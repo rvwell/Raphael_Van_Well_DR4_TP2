@@ -11,11 +11,14 @@ public class Parrot {
     private static final double AFRICAN_PARROT_LOAD_FACTOR = 9.0;
     private static final double NORWEGIAN_BLUE_MAX_SPEED_CAP = 24.0;
 
-    public Parrot(ParrotTypeEnum type, int numberOfCoconuts, double voltage, boolean isNailed) {
-        this.type = type;
-        this.numberOfCoconuts = numberOfCoconuts;
-        this.voltage = voltage;
-        this.isNailed = isNailed;
+    public Parrot(ParrotCreationProperties properties) {
+        if (properties == null) {
+            throw new IllegalArgumentException("As propriedades do papagaio não podem ser nulas.");
+        }
+        this.type = properties.type();
+        this.numberOfCoconuts = properties.numberOfCoconuts();
+        this.voltage = properties.voltage();
+        this.isNailed = properties.isNailed();
     }
 
     public double getSpeed() {
